@@ -138,6 +138,12 @@ Changelog:
   * Added authentication checks to all pages
   * Added logout functionality
   * Updated main app with user welcome and logout button
+- July 03, 2025. Removed authentication system per user request
+  * Deleted login and signup pages (0_Login.py, 0_Signup.py)
+  * Removed auth directory and related files (utils/auth.py, utils/auth_helper.py)
+  * Cleaned up authentication checks from all pages
+  * Updated main app to remove auth-related functionality
+  * System now works without login requirements
 ```
 
 ## User Preferences

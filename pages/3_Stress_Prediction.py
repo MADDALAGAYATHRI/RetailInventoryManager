@@ -7,16 +7,7 @@ from datetime import datetime, timedelta, date
 from utils.data_manager import DataManager
 from utils.ml_models import StressPredictor
 
-def check_authentication():
-    """Check if user is authenticated, redirect to login if not"""
-    if 'user_authenticated' not in st.session_state or not st.session_state.user_authenticated:
-        st.switch_page("pages/0_Login.py")
-        return False
-    return True
 
-# Check authentication before proceeding
-if not check_authentication():
-    st.stop()
 
 st.set_page_config(page_title="Stress Prediction", page_icon="🔮", layout="wide")
 
