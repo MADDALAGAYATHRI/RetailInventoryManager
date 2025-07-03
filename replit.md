@@ -132,6 +132,12 @@ MindGuard is a privacy-first mental health monitoring application built with Str
 ```
 Changelog:
 - July 03, 2025. Initial setup
+- July 03, 2025. Added authentication system with phone number OTP verification
+  * Created AuthManager class for user authentication
+  * Implemented signup and login pages with Twilio SMS OTP
+  * Added authentication checks to all pages
+  * Added logout functionality
+  * Updated main app with user welcome and logout button
 ```
 
 ## User Preferences

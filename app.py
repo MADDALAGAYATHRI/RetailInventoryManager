@@ -6,6 +6,7 @@ from datetime import datetime, timedelta
 import os
 from utils.data_manager import DataManager
 from utils.ml_models import StressPredictor
+from utils.auth import AuthManager
 import numpy as np
 
 # Page configuration
@@ -23,10 +24,25 @@ def load_css():
 
 load_css()
 
-# Initialize data manager
+# Initialize managers
 @st.cache_resource
 def get_data_manager():
     return DataManager()
+
+@st.cache_resource
+def get_auth_manager():
+    return AuthManager()
+
+def check_authentication():
+    """Check if user is authenticated, redirect to login if not"""
+    if 'user_authenticated' not in st.session_state or not st.session_state.user_authenticated:
+        st.switch_page("pages/0_Login.py")
+        return False
+    return True
+
+# Check authentication before proceeding
+if not check_authentication():
+    st.stop()
 
 data_manager = get_data_manager()
 
@@ -39,6 +55,17 @@ if 'privacy_mode' not in st.session_state:
 # Sidebar
 with st.sidebar:
     st.image("https://via.placeholder.com/200x80/4A90A4/FFFFFF?text=MindGuard", use_column_width=True)
+    
+    # User info and logout
+    if 'user_name' in st.session_state:
+        st.markdown(f"**Welcome, {st.session_state.user_name}!** 👋")
+    
+    if st.button("🚪 Logout", use_container_width=True):
+        # Clear all session state
+        for key in list(st.session_state.keys()):
+            del st.session_state[key]
+        st.switch_page("pages/0_Login.py")
+    
     st.markdown("---")
     
     # Privacy indicator
