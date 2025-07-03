@@ -142,10 +142,17 @@ with col2:
                 if verify_submitted:
                     if otp_code and len(otp_code) == 6:
                         # Verify OTP
-                        success, message = auth_manager.verify_otp(st.session_state.temp_phone, otp_code)
+                        success, message = auth_manager.verify_otp(
+                            st.session_state.temp_phone, 
+                            otp_code,
+                            st.session_state.temp_country_code
+                        )
                         if success:
                             # Login user
-                            login_success, login_message, user_id = auth_manager.login_user(st.session_state.temp_phone)
+                            login_success, login_message, user_id = auth_manager.login_user(
+                                st.session_state.temp_phone,
+                                st.session_state.temp_country_code
+                            )
                             if login_success:
                                 # Set session state
                                 st.session_state.user_authenticated = True
@@ -153,7 +160,10 @@ with col2:
                                 st.session_state.user_phone = st.session_state.temp_phone
                                 
                                 # Get user data
-                                user_data = auth_manager.get_user(st.session_state.temp_phone)
+                                user_data = auth_manager.get_user(
+                                    st.session_state.temp_phone,
+                                    st.session_state.temp_country_code
+                                )
                                 if user_data:
                                     st.session_state.user_name = user_data.get('name', 'User')
                                 
@@ -171,7 +181,10 @@ with col2:
                         st.error("❌ Please enter a valid 6-digit code")
                 
                 if resend_submitted:
-                    success, message = auth_manager.send_otp(st.session_state.temp_phone)
+                    success, message = auth_manager.send_otp(
+                        st.session_state.temp_phone,
+                        st.session_state.temp_country_code
+                    )
                     if success:
                         st.success("📱 New verification code sent!")
                     else:

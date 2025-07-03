@@ -173,7 +173,8 @@ with col2:
                         # Verify OTP
                         success, message = auth_manager.verify_otp(
                             st.session_state.temp_signup_data['phone_number'], 
-                            otp_code
+                            otp_code,
+                            st.session_state.temp_signup_data['country_code']
                         )
                         if success:
                             # Create user account

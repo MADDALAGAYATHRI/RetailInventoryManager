@@ -99,16 +99,16 @@ class AuthManager:
         except Exception:
             return None
             
-    def update_user(self, phone_number: str, updates: Dict) -> bool:
+    def update_user(self, phone_number: str, updates: Dict, country_code: str = "+1") -> bool:
         """Update user data."""
         try:
-            user_data = self.get_user(phone_number)
+            user_data = self.get_user(phone_number, country_code)
             if not user_data:
                 return False
                 
             user_data.update(updates)
             
-            phone_hash = self.hash_phone_number(self.normalize_phone_number(phone_number))
+            phone_hash = self.hash_phone_number(self.normalize_phone_number(phone_number, country_code))
             user_file = f"{self.auth_dir}/users/{phone_hash}.json"
             
             with open(user_file, 'w', encoding='utf-8') as f:
@@ -160,10 +160,10 @@ class AuthManager:
         except Exception as e:
             return False, f"Failed to send OTP: {str(e)}"
             
-    def verify_otp(self, phone_number: str, entered_otp: str) -> Tuple[bool, str]:
+    def verify_otp(self, phone_number: str, entered_otp: str, country_code: str = "+1") -> Tuple[bool, str]:
         """Verify the entered OTP."""
         try:
-            phone_hash = self.hash_phone_number(self.normalize_phone_number(phone_number))
+            phone_hash = self.hash_phone_number(self.normalize_phone_number(phone_number, country_code))
             otp_dir = f"{self.auth_dir}/otps"
             
             # Find the latest OTP for this phone number
@@ -204,10 +204,10 @@ class AuthManager:
         except Exception as e:
             return False, f"Error verifying OTP: {str(e)}"
             
-    def login_user(self, phone_number: str) -> Tuple[bool, str, Optional[str]]:
+    def login_user(self, phone_number: str, country_code: str = "+1") -> Tuple[bool, str, Optional[str]]:
         """Login user after OTP verification."""
         try:
-            user_data = self.get_user(phone_number)
+            user_data = self.get_user(phone_number, country_code)
             if not user_data:
                 return False, "User not found", None
                 
@@ -215,7 +215,7 @@ class AuthManager:
             self.update_user(phone_number, {
                 'last_login': datetime.now().isoformat(),
                 'is_verified': True
-            })
+            }, country_code)
             
             return True, "Login successful", user_data['phone_hash']
             
