@@ -1,0 +1,510 @@
+/* Mental Health Monitoring System - Therapeutic Theme */
+
+/* Import fonts for better readability */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* Root variables for consistent theming */
+:root {
+    /* Calming color palette */
+    --primary-blue: #4A90A4;
+    --secondary-blue: #6BA6C7;
+    --light-blue: #E6F3F7;
+    --background-white: #F0F8FF;
+    --soft-green: #52C41A;
+    --warm-green: #95D5B2;
+    --light-green: #D8F3DC;
+    --gentle-orange: #FAAD14;
+    --soft-red: #FF7875;
+    --error-red: #FF4D4F;
+    --text-dark: #2C3E50;
+    --text-medium: #5A6C7D;
+    --text-light: #8E8E93;
+    --white: #FFFFFF;
+    --light-gray: #F5F7FA;
+    --border-light: #E1E8ED;
+    
+    /* Spacing */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-xxl: 3rem;
+    
+    /* Border radius for soft, welcoming feel */
+    --radius-sm: 6px;
+    --radius-md: 10px;
+    --radius-lg: 15px;
+    --radius-xl: 20px;
+    
+    /* Shadows for depth and comfort */
+    --shadow-soft: 0 2px 8px rgba(74, 144, 164, 0.1);
+    --shadow-medium: 0 4px 16px rgba(74, 144, 164, 0.15);
+    --shadow-strong: 0 8px 32px rgba(74, 144, 164, 0.2);
+}
+
+/* Global styles */
+* {
+    box-sizing: border-box;
+}
+
+html, body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+    color: var(--text-dark);
+    line-height: 1.6;
+    scroll-behavior: smooth;
+}
+
+/* Streamlit specific overrides */
+.stApp {
+    background-color: var(--background-white);
+}
+
+/* Main content area */
+.main .block-container {
+    padding-top: var(--spacing-lg);
+    padding-bottom: var(--spacing-xxl);
+    max-width: 1200px;
+}
+
+/* Headers with calming styling */
+h1, h2, h3, h4, h5, h6 {
+    color: var(--text-dark);
+    font-weight: 600;
+    line-height: 1.3;
+    margin-bottom: var(--spacing-md);
+}
+
+h1 {
+    font-size: 2.5rem;
+    margin-bottom: var(--spacing-lg);
+    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+h2 {
+    font-size: 2rem;
+    color: var(--primary-blue);
+    border-bottom: 2px solid var(--light-blue);
+    padding-bottom: var(--spacing-sm);
+}
+
+h3 {
+    font-size: 1.5rem;
+    color: var(--text-dark);
+}
+
+h4 {
+    font-size: 1.25rem;
+    color: var(--text-medium);
+}
+
+/* Sidebar styling */
+.css-1d391kg {
+    background-color: var(--light-blue);
+    border-right: 1px solid var(--border-light);
+}
+
+/* Sidebar content */
+.sidebar .sidebar-content {
+    padding: var(--spacing-lg);
+}
+
+/* Buttons with therapeutic styling */
+.stButton > button {
+    background: linear-gradient(135deg, var(--primary-blue), var(--secondary-blue));
+    color: var(--white);
+    border: none;
+    border-radius: var(--radius-md);
+    padding: var(--spacing-sm) var(--spacing-lg);
+    font-weight: 500;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    box-shadow: var(--shadow-soft);
+    min-height: 2.5rem;
+}
+
+.stButton > button:hover {
+    transform: translateY(-2px);
+    box-shadow: var(--shadow-medium);
+    background: linear-gradient(135deg, var(--secondary-blue), var(--primary-blue));
+}
+
+.stButton > button:active {
+    transform: translateY(0);
+    box-shadow: var(--shadow-soft);
+}
+
+/* Success/positive buttons */
+.stButton > button[kind="primary"] {
+    background: linear-gradient(135deg, var(--soft-green), var(--warm-green));
+}
+
+.stButton > button[kind="primary"]:hover {
+    background: linear-gradient(135deg, var(--warm-green), var(--soft-green));
+}
+
+/* Warning buttons */
+.stButton > button[kind="secondary"] {
+    background: linear-gradient(135deg, var(--gentle-orange), #FFC53D);
+    color: var(--text-dark);
+}
+
+/* Metrics with calming design */
+.metric-container {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-soft);
+    border-left: 4px solid var(--primary-blue);
+    transition: all 0.3s ease;
+}
+
+.metric-container:hover {
+    box-shadow: var(--shadow-medium);
+    transform: translateY(-2px);
+}
+
+/* Metric styling improvements */
+[data-testid="metric-container"] {
+    background: var(--white);
+    border: 1px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    box-shadow: var(--shadow-soft);
+    transition: all 0.3s ease;
+}
+
+[data-testid="metric-container"]:hover {
+    box-shadow: var(--shadow-medium);
+    border-color: var(--primary-blue);
+}
+
+/* Input fields with therapeutic styling */
+.stTextInput > div > div > input,
+.stTextArea > div > div > textarea,
+.stSelectbox > div > div > div,
+.stNumberInput > div > div > input {
+    border: 2px solid var(--border-light);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    background-color: var(--white);
+}
+
+.stTextInput > div > div > input:focus,
+.stTextArea > div > div > textarea:focus,
+.stSelectbox > div > div > div:focus,
+.stNumberInput > div > div > input:focus {
+    border-color: var(--primary-blue);
+    box-shadow: 0 0 0 3px rgba(74, 144, 164, 0.1);
+    outline: none;
+}
+
+/* Sliders with calming colors */
+.stSlider > div > div > div > div {
+    background: linear-gradient(90deg, var(--light-blue), var(--primary-blue));
+}
+
+.stSlider > div > div > div > div > div {
+    background-color: var(--primary-blue);
+    border: 3px solid var(--white);
+    box-shadow: var(--shadow-soft);
+}
+
+/* Expander styling */
+.streamlit-expanderHeader {
+    background-color: var(--light-blue);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-sm) var(--spacing-md);
+    margin-bottom: var(--spacing-sm);
+    border: 1px solid var(--border-light);
+    transition: all 0.3s ease;
+}
+
+.streamlit-expanderHeader:hover {
+    background-color: var(--primary-blue);
+    color: var(--white);
+    box-shadow: var(--shadow-soft);
+}
+
+.streamlit-expanderContent {
+    background-color: var(--white);
+    border: 1px solid var(--border-light);
+    border-radius: 0 0 var(--radius-md) var(--radius-md);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-soft);
+}
+
+/* Tab styling */
+.stTabs [data-baseweb="tab-list"] {
+    gap: var(--spacing-sm);
+    background-color: var(--light-blue);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-xs);
+}
+
+.stTabs [data-baseweb="tab"] {
+    height: auto;
+    padding: var(--spacing-sm) var(--spacing-lg);
+    border-radius: var(--radius-sm);
+    color: var(--text-medium);
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.stTabs [data-baseweb="tab"][aria-selected="true"] {
+    background-color: var(--primary-blue);
+    color: var(--white);
+    box-shadow: var(--shadow-soft);
+}
+
+.stTabs [data-baseweb="tab"]:hover {
+    background-color: var(--secondary-blue);
+    color: var(--white);
+}
+
+/* Alert and message styling */
+.stSuccess {
+    background-color: var(--light-green);
+    border-left: 4px solid var(--soft-green);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    color: var(--text-dark);
+}
+
+.stWarning {
+    background-color: #FFF7E6;
+    border-left: 4px solid var(--gentle-orange);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    color: var(--text-dark);
+}
+
+.stError {
+    background-color: #FFF1F0;
+    border-left: 4px solid var(--soft-red);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    color: var(--text-dark);
+}
+
+.stInfo {
+    background-color: var(--light-blue);
+    border-left: 4px solid var(--primary-blue);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-md);
+    color: var(--text-dark);
+}
+
+/* Progress bars */
+.stProgress > div > div > div {
+    background: linear-gradient(90deg, var(--soft-green), var(--warm-green));
+    border-radius: var(--radius-md);
+}
+
+/* Dataframe styling */
+.stDataFrame {
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
+}
+
+/* Plotly chart container */
+.js-plotly-plot {
+    border-radius: var(--radius-md);
+    box-shadow: var(--shadow-soft);
+    overflow: hidden;
+}
+
+/* Custom containers */
+.mental-health-card {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-soft);
+    border: 1px solid var(--border-light);
+    margin-bottom: var(--spacing-md);
+    transition: all 0.3s ease;
+}
+
+.mental-health-card:hover {
+    box-shadow: var(--shadow-medium);
+    transform: translateY(-2px);
+}
+
+.stress-level-high {
+    border-left: 4px solid var(--soft-red);
+    background: linear-gradient(135deg, #FFF1F0, var(--white));
+}
+
+.stress-level-moderate {
+    border-left: 4px solid var(--gentle-orange);
+    background: linear-gradient(135deg, #FFF7E6, var(--white));
+}
+
+.stress-level-low {
+    border-left: 4px solid var(--soft-green);
+    background: linear-gradient(135deg, var(--light-green), var(--white));
+}
+
+/* Gentle animations */
+@keyframes gentle-pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.8; }
+}
+
+.pulse-animation {
+    animation: gentle-pulse 2s ease-in-out infinite;
+}
+
+@keyframes gentle-bounce {
+    0%, 20%, 50%, 80%, 100% { transform: translateY(0); }
+    40% { transform: translateY(-5px); }
+    60% { transform: translateY(-3px); }
+}
+
+.bounce-animation {
+    animation: gentle-bounce 1s ease-in-out;
+}
+
+/* Loading states */
+.loading-spinner {
+    border: 3px solid var(--light-blue);
+    border-top: 3px solid var(--primary-blue);
+    border-radius: 50%;
+    width: 30px;
+    height: 30px;
+    animation: spin 1s linear infinite;
+    margin: var(--spacing-md) auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    .main .block-container {
+        padding: var(--spacing-md);
+    }
+    
+    h1 {
+        font-size: 2rem;
+    }
+    
+    h2 {
+        font-size: 1.5rem;
+    }
+    
+    .mental-health-card {
+        padding: var(--spacing-md);
+    }
+}
+
+/* Form styling */
+.stForm {
+    background: var(--white);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-soft);
+    border: 1px solid var(--border-light);
+}
+
+/* Custom checkbox styling */
+.stCheckbox > label {
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+/* Radio button styling */
+.stRadio > label {
+    font-weight: 500;
+    color: var(--text-dark);
+}
+
+/* File uploader styling */
+.stFileUploader {
+    border: 2px dashed var(--border-light);
+    border-radius: var(--radius-md);
+    padding: var(--spacing-lg);
+    text-align: center;
+    background: var(--light-gray);
+    transition: all 0.3s ease;
+}
+
+.stFileUploader:hover {
+    border-color: var(--primary-blue);
+    background: var(--light-blue);
+}
+
+/* Custom utility classes */
+.text-center { text-align: center; }
+.text-left { text-align: left; }
+.text-right { text-align: right; }
+
+.mb-sm { margin-bottom: var(--spacing-sm); }
+.mb-md { margin-bottom: var(--spacing-md); }
+.mb-lg { margin-bottom: var(--spacing-lg); }
+
+.mt-sm { margin-top: var(--spacing-sm); }
+.mt-md { margin-top: var(--spacing-md); }
+.mt-lg { margin-top: var(--spacing-lg); }
+
+.p-sm { padding: var(--spacing-sm); }
+.p-md { padding: var(--spacing-md); }
+.p-lg { padding: var(--spacing-lg); }
+
+/* Accessibility improvements */
+.stButton > button:focus,
+.stTextInput > div > div > input:focus,
+.stTextArea > div > div > textarea:focus {
+    outline: 2px solid var(--primary-blue);
+    outline-offset: 2px;
+}
+
+/* Hide Streamlit branding for cleaner look */
+#MainMenu {visibility: hidden;}
+footer {visibility: hidden;}
+header {visibility: hidden;}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: var(--light-gray);
+    border-radius: var(--radius-sm);
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--primary-blue);
+    border-radius: var(--radius-sm);
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--secondary-blue);
+}
+
+/* Focus indicators for accessibility */
+*:focus {
+    outline: 2px solid var(--primary-blue);
+    outline-offset: 2px;
+}
+
+/* Print styles */
+@media print {
+    .stButton, .stSidebar {
+        display: none !important;
+    }
+    
+    .mental-health-card {
+        box-shadow: none;
+        border: 1px solid var(--border-light);
+    }
+}
