@@ -211,6 +211,10 @@ if view_type == "Overview":
     st.markdown("---")
     st.subheader("📅 Weekly Progress Summary")
     
+    # Convert date column to datetime if it's not already
+    if not pd.api.types.is_datetime64_any_dtype(data['date']):
+        data['date'] = pd.to_datetime(data['date'])
+    
     # Group data by week
     data['week'] = data['date'].dt.isocalendar().week
     data['year'] = data['date'].dt.year

@@ -219,6 +219,10 @@ with col1:
 
 with col2:
     # Weekly exercise pattern
+    # Convert date column to datetime if it's not already
+    if not pd.api.types.is_datetime64_any_dtype(data['date']):
+        data['date'] = pd.to_datetime(data['date'])
+    
     data['day_of_week'] = data['date'].dt.day_name()
     day_order = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday']
     weekly_exercise = data.groupby('day_of_week')['exercise_minutes'].mean().reindex(day_order)

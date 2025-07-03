@@ -184,17 +184,8 @@ if existing_entry is None or st.session_state.get('update_mode', False):
                 elif exercise_minutes == 0:
                     st.info("🚶‍♀️ Consider adding some physical activity to your day.")
                 
-                # Navigation buttons
-                col1, col2, col3 = st.columns(3)
-                with col1:
-                    if st.button("🎯 Get Personalized Interventions"):
-                        st.switch_page("pages/4_Interventions.py")
-                with col2:
-                    if st.button("📊 View Lifestyle Analysis"):
-                        st.switch_page("pages/2_Lifestyle_Analysis.py")
-                with col3:
-                    if st.button("🏠 Back to Dashboard"):
-                        st.switch_page("app.py")
+                # Success message - navigation will be available outside the form
+                pass
             else:
                 st.error("❌ Failed to save check-in. Please try again.")
 

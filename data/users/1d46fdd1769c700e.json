@@ -1,0 +1,19 @@
+[
+  {
+    "user_id": "anonymous_user",
+    "date": "2025-07-03",
+    "mood_score": 4,
+    "stress_level": 5,
+    "energy_level": 5,
+    "sleep_hours": 8.0,
+    "exercise_minutes": 10,
+    "work_hours": 8.0,
+    "social_interaction": "None",
+    "caffeine_intake": 0,
+    "alcohol_intake": 0,
+    "meditation_minutes": 0,
+    "mood_notes": "",
+    "symptoms": "",
+    "timestamp": "2025-07-03 05:15:43.892258"
+  }
+]

@@ -57,7 +57,7 @@ class DataManager:
             
             df = pd.DataFrame(data)
             if not df.empty:
-                df['date'] = pd.to_datetime(df['date']).dt.date
+                df['date'] = pd.to_datetime(df['date'])
                 df['timestamp'] = pd.to_datetime(df['timestamp'])
             
             return df
@@ -97,7 +97,13 @@ class DataManager:
             
             # Check if entry for this date already exists
             entry_date = entry_data['date']
-            existing_mask = current_data['date'] == entry_date
+            if not current_data.empty and 'date' in current_data.columns:
+                # Convert both to same format for comparison
+                current_data['date'] = pd.to_datetime(current_data['date']).dt.date
+                entry_date = pd.to_datetime(entry_date).date()
+                existing_mask = current_data['date'] == entry_date
+            else:
+                existing_mask = pd.Series([False] * len(current_data))
             
             if existing_mask.any():
                 # Update existing entry
