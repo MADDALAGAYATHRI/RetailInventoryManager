@@ -64,11 +64,33 @@ with col2:
                     help="This will be used to personalize your experience"
                 )
                 
-                phone_number = st.text_input(
-                    "Phone Number",
-                    placeholder="+1234567890 or 1234567890",
-                    help="We'll use this to send you verification codes"
-                )
+                col_country, col_phone = st.columns([1, 3])
+                
+                with col_country:
+                    country_code = st.selectbox(
+                        "Country",
+                        ["+1", "+44", "+91", "+33", "+49", "+81", "+86", "+61", "+55", "+52"],
+                        format_func=lambda x: {
+                            "+1": "🇺🇸 +1 (US/CA)",
+                            "+44": "🇬🇧 +44 (UK)",
+                            "+91": "🇮🇳 +91 (India)",
+                            "+33": "🇫🇷 +33 (France)",
+                            "+49": "🇩🇪 +49 (Germany)",
+                            "+81": "🇯🇵 +81 (Japan)",
+                            "+86": "🇨🇳 +86 (China)",
+                            "+61": "🇦🇺 +61 (Australia)",
+                            "+55": "🇧🇷 +55 (Brazil)",
+                            "+52": "🇲🇽 +52 (Mexico)"
+                        }[x],
+                        help="Select your country code"
+                    )
+                
+                with col_phone:
+                    phone_number = st.text_input(
+                        "Phone Number",
+                        placeholder="Enter your phone number",
+                        help="We'll use this to send you verification codes"
+                    )
                 
                 # Privacy agreement
                 st.markdown("### 🔒 Privacy & Terms")
@@ -87,16 +109,17 @@ with col2:
                 if submitted:
                     if name and phone_number and privacy_agreed and terms_agreed:
                         # Check if user already exists
-                        if auth_manager.user_exists(phone_number):
+                        if auth_manager.user_exists(phone_number, country_code):
                             st.error("❌ An account already exists with this phone number. Please login instead.")
                         else:
                             # Store temp data and send OTP
                             st.session_state.temp_signup_data = {
                                 'name': name,
-                                'phone_number': phone_number
+                                'phone_number': phone_number,
+                                'country_code': country_code
                             }
                             
-                            success, message = auth_manager.send_otp(phone_number)
+                            success, message = auth_manager.send_otp(phone_number, country_code)
                             if success:
                                 st.session_state.signup_step = 'otp'
                                 st.success("📱 Verification code sent to your phone!")
@@ -156,7 +179,8 @@ with col2:
                             # Create user account
                             create_success, create_message = auth_manager.create_user(
                                 st.session_state.temp_signup_data['phone_number'],
-                                st.session_state.temp_signup_data['name']
+                                st.session_state.temp_signup_data['name'],
+                                st.session_state.temp_signup_data['country_code']
                             )
                             
                             if create_success:
@@ -189,7 +213,10 @@ with col2:
                         st.error("❌ Please enter a valid 6-digit code")
                 
                 if resend_submitted:
-                    success, message = auth_manager.send_otp(st.session_state.temp_signup_data['phone_number'])
+                    success, message = auth_manager.send_otp(
+                        st.session_state.temp_signup_data['phone_number'],
+                        st.session_state.temp_signup_data['country_code']
+                    )
                     if success:
                         st.success("📱 New verification code sent!")
                     else:

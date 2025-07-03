@@ -40,35 +40,32 @@ class AuthManager:
         """Create a hash of the phone number for privacy."""
         return hashlib.sha256(phone_number.encode()).hexdigest()[:16]
         
-    def normalize_phone_number(self, phone_number: str) -> str:
-        """Normalize phone number format."""
+    def normalize_phone_number(self, phone_number: str, country_code: str = "+1") -> str:
+        """Normalize phone number format with country code."""
         # Remove all non-digit characters
         digits = ''.join(filter(str.isdigit, phone_number))
         
-        # Add country code if missing (assume US +1)
-        if len(digits) == 10:
-            digits = '1' + digits
-        elif len(digits) == 11 and digits.startswith('1'):
-            pass  # Already has country code
-        else:
-            # For other country codes, keep as is
-            pass
-            
-        return '+' + digits
+        # Remove leading country code if present
+        country_digits = country_code.replace('+', '')
+        if digits.startswith(country_digits):
+            digits = digits[len(country_digits):]
         
-    def user_exists(self, phone_number: str) -> bool:
+        # Add the specified country code
+        return country_code + digits
+        
+    def user_exists(self, phone_number: str, country_code: str = "+1") -> bool:
         """Check if user already exists."""
-        phone_hash = self.hash_phone_number(self.normalize_phone_number(phone_number))
+        phone_hash = self.hash_phone_number(self.normalize_phone_number(phone_number, country_code))
         user_file = f"{self.auth_dir}/users/{phone_hash}.json"
         return os.path.exists(user_file)
         
-    def create_user(self, phone_number: str, name: str) -> Tuple[bool, str]:
+    def create_user(self, phone_number: str, name: str, country_code: str = "+1") -> Tuple[bool, str]:
         """Create a new user account."""
         try:
-            normalized_phone = self.normalize_phone_number(phone_number)
+            normalized_phone = self.normalize_phone_number(phone_number, country_code)
             phone_hash = self.hash_phone_number(normalized_phone)
             
-            if self.user_exists(phone_number):
+            if self.user_exists(phone_number, country_code):
                 return False, "User already exists with this phone number"
                 
             user_data = {
@@ -88,10 +85,10 @@ class AuthManager:
         except Exception as e:
             return False, f"Error creating user: {str(e)}"
             
-    def get_user(self, phone_number: str) -> Optional[Dict]:
+    def get_user(self, phone_number: str, country_code: str = "+1") -> Optional[Dict]:
         """Get user data by phone number."""
         try:
-            phone_hash = self.hash_phone_number(self.normalize_phone_number(phone_number))
+            phone_hash = self.hash_phone_number(self.normalize_phone_number(phone_number, country_code))
             user_file = f"{self.auth_dir}/users/{phone_hash}.json"
             
             if os.path.exists(user_file):
@@ -126,13 +123,13 @@ class AuthManager:
         """Generate a 6-digit OTP."""
         return str(random.randint(100000, 999999))
         
-    def send_otp(self, phone_number: str) -> Tuple[bool, str]:
+    def send_otp(self, phone_number: str, country_code: str = "+1") -> Tuple[bool, str]:
         """Send OTP via SMS."""
         try:
             if not self.twilio_client:
                 return False, "SMS service not configured"
                 
-            normalized_phone = self.normalize_phone_number(phone_number)
+            normalized_phone = self.normalize_phone_number(phone_number, country_code)
             otp = self.generate_otp()
             
             # Store OTP with expiry

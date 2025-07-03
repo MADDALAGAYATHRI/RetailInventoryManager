@@ -58,22 +58,45 @@ with col2:
             st.markdown("Enter your phone number to receive a verification code")
             
             with st.form("login_phone_form"):
-                phone_number = st.text_input(
-                    "Phone Number",
-                    placeholder="+1234567890 or 1234567890",
-                    help="Enter your phone number with or without country code"
-                )
+                col_country, col_phone = st.columns([1, 3])
+                
+                with col_country:
+                    country_code = st.selectbox(
+                        "Country",
+                        ["+1", "+44", "+91", "+33", "+49", "+81", "+86", "+61", "+55", "+52"],
+                        format_func=lambda x: {
+                            "+1": "🇺🇸 +1 (US/CA)",
+                            "+44": "🇬🇧 +44 (UK)",
+                            "+91": "🇮🇳 +91 (India)",
+                            "+33": "🇫🇷 +33 (France)",
+                            "+49": "🇩🇪 +49 (Germany)",
+                            "+81": "🇯🇵 +81 (Japan)",
+                            "+86": "🇨🇳 +86 (China)",
+                            "+61": "🇦🇺 +61 (Australia)",
+                            "+55": "🇧🇷 +55 (Brazil)",
+                            "+52": "🇲🇽 +52 (Mexico)"
+                        }[x],
+                        help="Select your country code"
+                    )
+                
+                with col_phone:
+                    phone_number = st.text_input(
+                        "Phone Number",
+                        placeholder="Enter your phone number",
+                        help="Enter your phone number"
+                    )
                 
                 submitted = st.form_submit_button("Send Verification Code", use_container_width=True)
                 
                 if submitted:
                     if phone_number:
                         # Check if user exists
-                        if auth_manager.user_exists(phone_number):
+                        if auth_manager.user_exists(phone_number, country_code):
                             # Send OTP
-                            success, message = auth_manager.send_otp(phone_number)
+                            success, message = auth_manager.send_otp(phone_number, country_code)
                             if success:
                                 st.session_state.temp_phone = phone_number
+                                st.session_state.temp_country_code = country_code
                                 st.session_state.login_step = 'otp'
                                 st.success("📱 Verification code sent to your phone!")
                                 st.rerun()
