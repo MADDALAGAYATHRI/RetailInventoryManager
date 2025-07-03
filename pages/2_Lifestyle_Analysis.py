@@ -7,6 +7,17 @@ import numpy as np
 from datetime import datetime, timedelta
 from utils.data_manager import DataManager
 
+def check_authentication():
+    """Check if user is authenticated, redirect to login if not"""
+    if 'user_authenticated' not in st.session_state or not st.session_state.user_authenticated:
+        st.switch_page("pages/0_Login.py")
+        return False
+    return True
+
+# Check authentication before proceeding
+if not check_authentication():
+    st.stop()
+
 st.set_page_config(page_title="Lifestyle Analysis", page_icon="📊", layout="wide")
 
 # Load custom CSS
@@ -42,6 +53,10 @@ period_map = {
 }
 
 days = period_map[time_period]
+
+# Ensure user session is properly initialized
+if 'user_id' not in st.session_state:
+    st.session_state.user_id = st.session_state.get('user_id', 'anonymous_user')
 
 # Get data
 data = data_manager.get_recent_data(st.session_state.user_id, days=days)
